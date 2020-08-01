@@ -1,0 +1,22 @@
+{
+  "name": "discord-nodejs-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cerelius/discord-nodejs-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cerelius/discord-nodejs-testing/issues"
+  },
+  "homepage": "https://github.com/Cerelius/discord-nodejs-testing#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
+}
