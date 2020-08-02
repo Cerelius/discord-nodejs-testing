@@ -25,6 +25,8 @@ client.on("message", function (message) {
   if (command === "ping") {
     const timeTaken = Date.now() - message.createdTimestamp;
     message.reply(`${timeTaken}ms.`);
+  } else if (command === "hello") {
+    message.reply(`Hello World!`);
   } else if (command === "sum") {
     const numArgs = args.map((x) => parseFloat(x));
     const sum = numArgs.reduce((counter, x) => (counter += x));
