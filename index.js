@@ -14,7 +14,6 @@ client.on("message", function (message) {
   if (!message.content.startsWith(prefix)) return;
 
   // Any messages still being processed should be commands from users.
-
   // Identify the command body by removing the prefix defined above.
   const commandBody = message.content.slice(prefix.length);
   // Split the arguments in the command into array elements by splitting on the space characters.
@@ -22,6 +21,15 @@ client.on("message", function (message) {
   // Assign the first argument in the args array as the command.  This will always be the first
   // argument in the list of command arguments.  Also change it to lower case for easier processing.
   const command = args.shift().toLowerCase();
+
+  if (command === "ping") {
+    const timeTaken = Date.now() - message.createdTimestamp;
+    message.reply(`${timeTaken}ms.`);
+  } else if (command === "sum") {
+    const numArgs = args.map((x) => parseFloat(x));
+    const sum = numArgs.reduce((counter, x) => (counter += x));
+    message.reply(`Sum = ${sum}`);
+  }
 });
 
 client.login(config.BOT_TOKEN);
