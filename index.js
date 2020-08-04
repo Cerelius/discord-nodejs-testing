@@ -50,6 +50,16 @@ client.on(`message`, function (message) {
     );
     // Send the attachment in the message channel.
     message.channel.send(attachment);
+  } else if (command === "embed") {
+    const embed = new Discord.MessageEmbed()
+      // Set the title of the field
+      .setTitle("A slick little embed")
+      // Set the color of the embed
+      .setColor(0xff0000)
+      // Set the main content of the embed
+      .setDescription("Hello, this is a slick embed!");
+    // Send the embed to the same channel as the message
+    message.channel.send(embed);
   }
 });
 
