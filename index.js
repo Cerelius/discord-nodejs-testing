@@ -60,6 +60,38 @@ client.on(`message`, function (message) {
       .setDescription("Hello, this is a slick embed!");
     // Send the embed to the same channel as the message
     message.channel.send(embed);
+  } else if (command === "kick") {
+    // Grab the first user memtioned in the command
+    // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
+    const user = message.mentions.users.first();
+    // If there was a user mentioned continue on.
+    if (user) {
+      // Get the guild member from the user mention.
+      const member = message.guild.member(user);
+      // If the member is a part of the guild continue on.
+      if (member) {
+        // Kick the member from the guild.
+        // Make sure this is run on a member and not a user!  There are big differences between the two.
+        member
+          .kick(
+            `Kicked by ${botPackageInformation.name} as requested by ${message.author}`
+          )
+          .then(() => {
+            // Send successful kick confirmation to the message author
+            message.reply(`Successfully kick ${user.tag}`);
+          })
+          .catch((err) => {
+            // An error happened while trying to kick the member
+            message.reply(`I was unable to kick the member`);
+            console.error(err);
+          });
+      } else {
+        // The mentioned user isn't in this guild
+        message.reply(`That user isn't in this guild.`);
+      }
+    } else {
+      message.reply(`This command requires a mentioned user to be included.`);
+    }
   }
 });
 
