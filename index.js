@@ -1,12 +1,20 @@
 const Discord = require("discord.js");
 const config = require("./config.json");
+const botPackageInformation = require("./package.json");
 
 const client = new Discord.Client();
 
 // Commands all start with this character.
 const prefix = "!";
 
-client.on("message", function (message) {
+// Post a message to the console when the bot connects succesfully.
+client.on(`ready`, () => {
+  console.log(
+    `${botPackageInformation.name} version ${botPackageInformation.version} connected with user id: ${client.user.tag}`
+  );
+});
+
+client.on(`message`, function (message) {
   // Ignore messages sent from bots.
   if (message.author.bot) return;
 
@@ -31,7 +39,30 @@ client.on("message", function (message) {
     const numArgs = args.map((x) => parseFloat(x));
     const sum = numArgs.reduce((counter, x) => (counter += x));
     message.reply(`Sum = ${sum}`);
+  } else if (command === "avatar") {
+    // Send a URL linking to the user's avatar
+    message.reply(message.author.displayAvatarURL());
+  } else if (command === "jaedong") {
+    // Send a attached image of Jaedong encouraging you.
+    // Create an attachment using MessageAttachment.
+    const attachment = new Discord.MessageAttachment(
+      "https://i.imgur.com/X60kh.jpg"
+    );
+    // Send the attachment in the message channel.
+    message.channel.send(attachment);
   }
+});
+
+// Create an event listener for new guild members
+client.on("guildMemberAdd", (member) => {
+  // Send the message to a designated channel on a server:
+  const channel = member.guild.channels.cache.find(
+    (ch) => ch.name === "bot-testing-text"
+  );
+  // Do nothing if the channel name wasn't found on the server.
+  if (!channel) return;
+  // Send the message, metioning the member that joined.
+  channel.send("Welcome to the server, ${member}");
 });
 
 client.login(config.BOT_TOKEN);
